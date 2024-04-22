@@ -1,0 +1,257 @@
+openapi: "3.0.3"
+info:
+  title: Axiom API
+  version: "2"
+  description: |
+    100% of your data for every possible need: o11y, security, analytics, and new insights.
+  contact:
+    name: Axiom support
+    email: support@axiom.co
+    url: https://axiom.co
+servers:
+  - url: https://api.axiom.co
+    description: Production API
+security:
+  - BearerAuth: []
+tags:
+  - name: Annotations
+    description: Annotations are used to mark important events in your data.
+paths:
+  /annotations:
+    get:
+      operationId: getAnnotations
+      summary: Get annotations
+      description: Get all annotations and filter by datasets or timerange.
+      tags:
+        - Annotations
+      parameters:
+        - in: query
+          name: datasets
+          description: The datasets to filter by.
+          schema:
+            type: array
+            items:
+              type: string
+              minLength: 1
+            example: one-dataset,another-dataset
+        - in: query
+          name: start
+          description: If set, will filter to events after this date. Should be in RFC3339.
+          schema: 
+            type: string
+            format: date-time
+            example: "2024-04-19T15:00:00Z"
+        - in: query
+          name: end
+          schema: 
+            type: string
+            format: date-time
+            example: "2024-04-19T16:00:00Z"
+          description: If set, will filter to events before this date. Should be in RFC3339.
+      responses:
+        '200':
+          description: A list of annotations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Annotation"
+        '400':
+          $ref: "#/components/responses/400"
+        '401':
+          $ref: "#/components/responses/401"
+        '403':
+          $ref: "#/components/responses/403"
+        '500':
+          $ref: "#/components/responses/500"
+    post:
+      operationId: createAnnotation
+      summary: Create a new annotation.
+      description: Create a new annotation.
+      tags:
+        - Annotations
+      requestBody:
+        description: The annotation to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NewAnnotation"
+      responses:
+        '201':
+          description: The new annotation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Annotation"
+        '400':
+          $ref: "#/components/responses/400"
+        '401':
+          $ref: "#/components/responses/401"
+        '403':
+          $ref: "#/components/responses/403"
+        '500':
+          $ref: "#/components/responses/500"
+  /annotations/{id}:
+    get:
+      operationId: getAnnotation
+      summary: Get a single annotation.
+      description: Get a single annotation by id.
+      parameters:
+        - $ref: '#/components/parameters/annotationId'
+      responses:
+        '200':
+          description: The annotation with the given id.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Annotation"
+        '400':
+          $ref: "#/components/responses/400"
+        '401':
+          $ref: "#/components/responses/401"
+        '403':
+          $ref: "#/components/responses/403"
+        '500':
+          $ref: "#/components/responses/500"
+    put:
+      operationId: updateAnnotation
+      summary: Update an annotation.
+      description: Update an annotation.
+      parameters:
+        - $ref: '#/components/parameters/annotationId'
+      requestBody:
+        description: The fields to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAnnotation"
+      responses:
+        '200':
+          description: The updated annotation.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Annotation"
+        '400':
+          $ref: "#/components/responses/400"
+        '401':
+          $ref: "#/components/responses/401"
+        '403':
+          $ref: "#/components/responses/403"
+        '500':
+          $ref: "#/components/responses/500"
+    delete:
+      operationId: deleteAnnotation
+      summary: Delete an annotation.
+      description: Delete an annotation by id.
+      parameters:
+        - $ref: '#/components/parameters/annotationId'
+      responses:
+        '204':
+          description: Annotation was successfully deleted.
+        '400':
+          $ref: "#/components/responses/400"
+        '401':
+          $ref: "#/components/responses/401"
+        '403':
+          $ref: "#/components/responses/403"
+        '500':
+          $ref: "#/components/responses/500"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  responses:
+    '400':
+      description: The request is malformed, please check the parameters
+      # TODO: Add more details on the error
+    '401':
+      description: Unauthorized
+      # TODO: Add more details on the error
+    '403':
+      description: Forbidden
+      # TODO: Add more details on the error
+    '404':
+      description: Resource not found
+      # TODO: Add more details on the error
+    '500':
+      description: The server encountered an error
+      # TODO: Add more details on the error
+  schemas:
+    Annotation:
+      description: An annotation.
+      allOf:
+        - $ref: "#/components/schemas/NewAnnotation"
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              pattern: ^ann
+              description: The id of the annotation.
+              example: ann_0ebfg7cb0r9j3vc4bk4c409t48
+    NewAnnotation:
+      description: A new annotation to create.
+      allOf:
+        - $ref: "#/components/schemas/BaseAnnotation"
+        - required:
+            - id
+            - datasets
+            - type
+    UpdateAnnotation:
+      description: Fields to update on an annotation.
+      allOf:
+        - $ref: "#/components/schemas/BaseAnnotation"
+    BaseAnnotation:
+      description: The base annotation, used 
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 512
+          example: Production deployment
+        description:
+          type: string
+          example: A production deployment happened.
+          description: The description of the annotation.
+        time:
+          type: string
+          format: date-time
+          example: "2024-04-19T15:00:00Z"
+          description: The time of the annotation.
+        endTime:
+          type: string
+          format: date-time
+          example: "2024-04-19T16:00:00Z"
+          description: The end time, use for ranged annotations.
+        type:
+          type: string
+          example: deploy
+          description: The type of the annotation. Can be anything, used for filtering in the UI.
+        url:
+          type: string
+          description: A URL attached to the annotation.
+          example: https://deployments.example.com/42
+        datasets:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            minLength: 1
+          example: one-dataset,another-dataset
+          description: The datasets the annotation is attached to.
+  parameters:
+    annotationId: 
+      name: id
+      in: path
+      description: The id of the annotation.
+      schema:
+        type: string
+        pattern: ^ann
+      example: ann_0ebfg7cb0r9j3vc4bk4c409t48
+      required: true

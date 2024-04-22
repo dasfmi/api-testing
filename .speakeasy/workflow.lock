@@ -1,0 +1,19 @@
+speakeasyVersion: 1.267.1
+sources: {}
+targets: {}
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        openapi:
+            inputs:
+                - location: openapi.yaml
+    targets:
+        axiom-go:
+            target: go
+            source: openapi
+            output: sdks/go
+        axiom-js:
+            target: typescript
+            source: openapi
+            output: sdks/js
