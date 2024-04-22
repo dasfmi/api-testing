@@ -1,6 +1,6 @@
 configVersion: 2.0.0
 generation:
-  sdkClassName: axiom-js
+  sdkClassName: axiom
   maintainOpenAPIOrder: true
   usageSnippets:
     optionalPropertyRendering: withExample
@@ -10,29 +10,22 @@ generation:
     parameterOrderingFeb2024: true
     requestResponseComponentNamesFeb2024: true
   auth:
-    oAuth2ClientCredentialsEnabled: false
-typescript:
-  version: 0.0.2
-  additionalDependencies:
-    dependencies: {}
-    devDependencies: {}
-    peerDependencies: {}
-  additionalPackageJSON: {}
-  author: Axiom, Inc.
+    oAuth2ClientCredentialsEnabled: true
+go:
+  version: 0.0.1
+  additionalDependencies: {}
   clientServerStatusCodesAsErrors: true
-  enumFormat: enum
   flattenGlobalSecurity: true
   imports:
     option: openapi
     paths:
       callbacks: models/callbacks
-      errors: models/errors
+      errors: models/sdkerrors
       operations: models/operations
       shared: models/components
       webhooks: models/webhooks
   inputModelSuffix: input
-  maxMethodParams: 4
+  maxMethodParams: 444
   outputModelSuffix: output
-  packageName: axiom-js
+  packageName: axiom-go
   responseFormat: envelope-http
-  templateVersion: v2
