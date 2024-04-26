@@ -1,0 +1,65 @@
+lockVersion: 2.0.0
+id: 8d14d0a4-d055-4e7b-9517-beadd9133686
+management:
+  docChecksum: 2e0930ee7c51185a6fafcce81e2b1c08
+  docVersion: "2"
+  speakeasyVersion: 1.267.2
+  generationVersion: 2.312.1
+  releaseVersion: 0.0.2
+  configChecksum: e8422967ae0a7eeca804f8d0b9b340f9
+features:
+  go:
+    core: 3.4.6
+    flattening: 2.81.1
+    globalSecurity: 2.82.9
+    globalServerURLs: 2.82.2
+    responseFormat: 0.1.0
+generatedFiles:
+  - annotations.go
+  - axiom.go
+  - go.mod
+  - models/sdkerrors/sdkerror.go
+  - types/bigint.go
+  - types/date.go
+  - types/datetime.go
+  - types/decimal.go
+  - types/pointers.go
+  - internal/utils/contenttype.go
+  - internal/utils/form.go
+  - internal/utils/headers.go
+  - internal/utils/json.go
+  - internal/utils/pathparams.go
+  - internal/utils/queryparams.go
+  - internal/utils/requestbody.go
+  - internal/utils/retries.go
+  - internal/utils/security.go
+  - internal/utils/utils.go
+  - /models/operations/getannotation.go
+  - /models/operations/updateannotation.go
+  - /models/operations/deleteannotation.go
+  - /models/operations/getannotations.go
+  - /models/operations/createannotation.go
+  - /models/components/annotation.go
+  - /models/components/httpmetadata.go
+  - /models/components/baseannotation.go
+  - /models/components/newannotation.go
+  - /models/components/security.go
+  - docs/models/operations/getannotationrequest.md
+  - docs/models/operations/getannotationresponse.md
+  - docs/models/operations/updateannotationrequest.md
+  - docs/models/operations/updateannotationresponse.md
+  - docs/models/operations/deleteannotationrequest.md
+  - docs/models/operations/deleteannotationresponse.md
+  - docs/models/operations/getannotationsrequest.md
+  - docs/models/operations/getannotationsresponse.md
+  - docs/models/operations/createannotationresponse.md
+  - docs/models/components/annotation.md
+  - docs/models/components/httpmetadata.md
+  - docs/models/components/baseannotation.md
+  - docs/models/components/newannotation.md
+  - docs/models/components/security.md
+  - docs/sdks/axiom/README.md
+  - docs/sdks/annotations/README.md
+  - USAGE.md
+  - .gitattributes
+  - internal/hooks/hooks.go
