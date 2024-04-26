@@ -1,21 +1,26 @@
 lockVersion: 2.0.0
 id: 8d14d0a4-d055-4e7b-9517-beadd9133686
 management:
-  docChecksum: 2e0930ee7c51185a6fafcce81e2b1c08
-  docVersion: "2"
-  speakeasyVersion: 1.267.2
-  generationVersion: 2.312.1
-  releaseVersion: 0.0.2
-  configChecksum: e8422967ae0a7eeca804f8d0b9b340f9
+  docChecksum: 138bf7dde08e52abee88df6ec0d5d142
+  docVersion: 1.0.1
+  speakeasyVersion: 1.274.1
+  generationVersion: 2.314.0
+  releaseVersion: 0.4.1
+  configChecksum: c2b8e57dd7a308893b4addf04745e5c1
 features:
   go:
+    constsAndDefaults: 0.1.4
     core: 3.4.6
     flattening: 2.81.1
     globalSecurity: 2.82.9
     globalServerURLs: 2.82.2
+    groups: 2.81.2
+    nameOverrides: 2.81.2
     responseFormat: 0.1.0
+    retries: 2.82.2
 generatedFiles:
-  - annotations.go
+  - datasets.go
+  - users.go
   - axiom.go
   - go.mod
   - models/sdkerrors/sdkerror.go
@@ -34,32 +39,132 @@ generatedFiles:
   - internal/utils/retries.go
   - internal/utils/security.go
   - internal/utils/utils.go
-  - /models/operations/getannotation.go
-  - /models/operations/updateannotation.go
-  - /models/operations/deleteannotation.go
-  - /models/operations/getannotations.go
-  - /models/operations/createannotation.go
-  - /models/components/annotation.go
+  - /models/operations/queryapl.go
+  - /models/operations/getdatasets.go
+  - /models/operations/createdataset.go
+  - /models/operations/getdataset.go
+  - /models/operations/updatedataset.go
+  - /models/operations/deletedataset.go
+  - /models/operations/ingestintodatasetjson.go
+  - /models/operations/ingestintodatasetraw.go
+  - /models/operations/querydataset.go
+  - /models/operations/trimdataset.go
+  - /models/operations/getcurrentuser.go
+  - /models/components/aplresult.go
+  - /models/components/table.go
+  - /models/components/sourceinfo.go
+  - /models/components/rangeinfo.go
+  - /models/components/order.go
+  - /models/components/groupinfo.go
+  - /models/components/fieldinfo.go
+  - /models/components/agginfo.go
+  - /models/components/bucketinfo.go
+  - /models/components/status.go
+  - /models/components/message.go
+  - /models/components/queryrequest.go
+  - /models/components/virtualcolumn.go
+  - /models/components/projection.go
+  - /models/components/filter.go
+  - /models/components/datasetfield.go
+  - /models/components/aggregation.go
+  - /models/components/entry.go
+  - /models/components/timeseries.go
+  - /models/components/entrygroup.go
+  - /models/components/entrygroupagg.go
+  - /models/components/interval.go
   - /models/components/httpmetadata.go
-  - /models/components/baseannotation.go
-  - /models/components/newannotation.go
+  - /models/components/aplrequestwithoptions.go
+  - /models/components/queryoptions.go
+  - /models/components/datasetspec.go
+  - /models/components/createdataset.go
+  - /models/components/updatedataset.go
+  - /models/components/ingeststatus.go
+  - /models/components/ingestfailure.go
+  - /models/components/result.go
+  - /models/components/queryrequestwithoptions.go
+  - /models/components/trimresult.go
+  - /models/components/trimoptions.go
+  - /models/components/user.go
   - /models/components/security.go
-  - docs/models/operations/getannotationrequest.md
-  - docs/models/operations/getannotationresponse.md
-  - docs/models/operations/updateannotationrequest.md
-  - docs/models/operations/updateannotationresponse.md
-  - docs/models/operations/deleteannotationrequest.md
-  - docs/models/operations/deleteannotationresponse.md
-  - docs/models/operations/getannotationsrequest.md
-  - docs/models/operations/getannotationsresponse.md
-  - docs/models/operations/createannotationresponse.md
-  - docs/models/components/annotation.md
+  - /models/sdkerrors/forbiddenerror.go
+  - /models/sdkerrors/notfounderror.go
+  - docs/models/operations/format.md
+  - docs/models/operations/queryaplrequest.md
+  - docs/models/operations/queryaplresponse.md
+  - docs/models/operations/getdatasetsresponse.md
+  - docs/models/operations/createdatasetresponse.md
+  - docs/models/operations/getdatasetrequest.md
+  - docs/models/operations/getdatasetresponse.md
+  - docs/models/operations/updatedatasetrequest.md
+  - docs/models/operations/updatedatasetresponse.md
+  - docs/models/operations/deletedatasetrequest.md
+  - docs/models/operations/deletedatasetresponse.md
+  - docs/models/operations/requestbody.md
+  - docs/models/operations/ingestintodatasetjsonrequest.md
+  - docs/models/operations/ingestintodatasetjsonresponse.md
+  - docs/models/operations/ingestintodatasetrequestbody.md
+  - docs/models/operations/ingestintodatasetrawrequest.md
+  - docs/models/operations/ingestintodatasetrawresponse.md
+  - docs/models/operations/querydatasetrequest.md
+  - docs/models/operations/querydatasetresponse.md
+  - docs/models/operations/trimdatasetrequest.md
+  - docs/models/operations/trimdatasetresponse.md
+  - docs/models/operations/getcurrentuserresponse.md
+  - docs/models/components/aplresult.md
+  - docs/models/components/columns.md
+  - docs/models/components/table.md
+  - docs/models/components/sourceinfo.md
+  - docs/models/components/rangeinfo.md
+  - docs/models/components/order.md
+  - docs/models/components/groupinfo.md
+  - docs/models/components/fieldinfo.md
+  - docs/models/components/args.md
+  - docs/models/components/agginfo.md
+  - docs/models/components/size.md
+  - docs/models/components/bucketinfo.md
+  - docs/models/components/status.md
+  - docs/models/components/message.md
+  - docs/models/components/queryrequest.md
+  - docs/models/components/virtualcolumn.md
+  - docs/models/components/projection.md
+  - docs/models/components/filterop.md
+  - docs/models/components/filtervalue.md
+  - docs/models/components/filter.md
+  - docs/models/components/datasetfield.md
+  - docs/models/components/argument.md
+  - docs/models/components/op.md
+  - docs/models/components/aggregation.md
+  - docs/models/components/entrydata.md
+  - docs/models/components/entry.md
+  - docs/models/components/timeseries.md
+  - docs/models/components/group.md
+  - docs/models/components/entrygroup.md
+  - docs/models/components/data.md
+  - docs/models/components/value.md
+  - docs/models/components/entrygroupagg.md
+  - docs/models/components/interval.md
   - docs/models/components/httpmetadata.md
-  - docs/models/components/baseannotation.md
-  - docs/models/components/newannotation.md
+  - docs/models/components/variables.md
+  - docs/models/components/aplrequestwithoptions.md
+  - docs/models/components/queryoptions.md
+  - docs/models/components/datasetspec.md
+  - docs/models/components/createdataset.md
+  - docs/models/components/updatedataset.md
+  - docs/models/components/ingeststatus.md
+  - docs/models/components/ingestfailure.md
+  - docs/models/components/result.md
+  - docs/models/components/queryrequestwithoptions.md
+  - docs/models/components/trimresult.md
+  - docs/models/components/trimoptions.md
+  - docs/models/components/user.md
   - docs/models/components/security.md
+  - docs/models/sdkerrors/forbiddenerror.md
+  - docs/models/sdkerrors/notfounderror.md
+  - docs/models/operations/option.md
   - docs/sdks/axiom/README.md
-  - docs/sdks/annotations/README.md
+  - docs/sdks/datasets/README.md
+  - docs/sdks/users/README.md
   - USAGE.md
+  - models/operations/options.go
   - .gitattributes
   - internal/hooks/hooks.go

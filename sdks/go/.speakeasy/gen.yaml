@@ -12,7 +12,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
 go:
-  version: 0.0.2
+  version: 0.4.1
   additionalDependencies: {}
   clientServerStatusCodesAsErrors: true
   flattenGlobalSecurity: true
@@ -27,5 +27,5 @@ go:
   inputModelSuffix: input
   maxMethodParams: 444
   outputModelSuffix: output
-  packageName: axiom-go
+  packageName: axiom
   responseFormat: envelope-http

@@ -1,0 +1,11 @@
+# BucketInfo
+
+The standard mode of operation for Kirby is to create buckets on the _time column,
+
+
+## Fields
+
+| Field                                                                                                                | Type                                                                                                                 | Required                                                                                                             | Description                                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `Field`                                                                                                              | **string*                                                                                                            | :heavy_minus_sign:                                                                                                   | Field specifies the field used to create buckets on. Normally this would be _time.                                   |
+| `Size`                                                                                                               | [*components.Size](../../models/components/size.md)                                                                  | :heavy_minus_sign:                                                                                                   | An integer or float representing the fixed bucket size.<br/>When the bucket field is _time this value is in nanoseconds. |

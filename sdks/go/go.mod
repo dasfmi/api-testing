@@ -1,4 +1,4 @@
-module axiom-go
+module axiom
 
 go 1.20
 

@@ -1,0 +1,13 @@
+# Result
+
+
+## Fields
+
+| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `Buckets`                                                                        | [components.Timeseries](../../models/components/timeseries.md)                   | :heavy_check_mark:                                                               | N/A                                                                              |
+| `FieldsMeta`                                                                     | [][components.DatasetField](../../models/components/datasetfield.md)             | :heavy_minus_sign:                                                               | FieldsMeta contains the unit information (if we have it) for each field          |
+| `Format`                                                                         | *string*                                                                         | :heavy_check_mark:                                                               | Format specifies the result set format. Either "legacy" (default) or "tabular".  |
+| `Matches`                                                                        | [][components.Entry](../../models/components/entry.md)                           | :heavy_minus_sign:                                                               | Matches hold the matching events of a filter query in the "legacy" result format |
+| `Status`                                                                         | [components.Status](../../models/components/status.md)                           | :heavy_check_mark:                                                               | N/A                                                                              |
+| `Tables`                                                                         | [][components.Table](../../models/components/table.md)                           | :heavy_minus_sign:                                                               | Tables hold the result tables in the "tabular" result format                     |

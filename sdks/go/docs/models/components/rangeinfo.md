@@ -1,0 +1,10 @@
+# RangeInfo
+
+
+## Fields
+
+| Field                                                                                                   | Type                                                                                                    | Required                                                                                                | Description                                                                                             |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `End`                                                                                                   | [*time.Time](https://pkg.go.dev/time#Time)                                                              | :heavy_minus_sign:                                                                                      | End is the ending time the query is limited by.<br/>Queries are restricted to the interval [start,end). |
+| `Field`                                                                                                 | **string*                                                                                               | :heavy_minus_sign:                                                                                      | Field specifies the field name on which the query range was restricted. Normally _time                  |
+| `Start`                                                                                                 | [*time.Time](https://pkg.go.dev/time#Time)                                                              | :heavy_minus_sign:                                                                                      | Start is the starting time the query is limited by.<br/>Queries are restricted to the interval [start,end). |

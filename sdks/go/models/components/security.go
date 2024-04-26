@@ -3,12 +3,12 @@
 package components
 
 type Security struct {
-	BearerAuth string `security:"scheme,type=http,subtype=bearer,name=Authorization"`
+	Auth string `security:"scheme,type=oauth2,name=Authorization"`
 }
 
-func (o *Security) GetBearerAuth() string {
+func (o *Security) GetAuth() string {
 	if o == nil {
 		return ""
 	}
-	return o.BearerAuth
+	return o.Auth
 }

@@ -3,18 +3,15 @@
 
 ## Overview
 
-Axiom API: 100% of your data for every possible need: o11y, security, analytics, and new insights.
-
+Axiom Public API: A public and stable API for interacting with Axiom services
 
 ### Available Operations
 
-* [GetAnnotation](#getannotation) - Get a single annotation.
-* [UpdateAnnotation](#updateannotation) - Update an annotation.
-* [DeleteAnnotation](#deleteannotation) - Delete an annotation.
+* [Query](#query) - Query
 
-## GetAnnotation
+## Query
 
-Get a single annotation by id.
+Query
 
 ### Example Usage
 
@@ -22,26 +19,39 @@ Get a single annotation by id.
 package main
 
 import(
-	"axiom-go/models/components"
-	axiomgo "axiom-go"
+	"axiom/models/components"
+	"axiom"
+	"axiom/models/operations"
 	"context"
 	"log"
 )
 
 func main() {
-    s := axiomgo.New(
-        axiomgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+    s := axiom.New(
+        axiom.WithSecurity("<YOUR_AUTH_HERE>"),
     )
 
 
-    var id string = "<value>"
+    var format operations.Format = operations.FormatTabular
+
+    aplRequestWithOptions := components.APLRequestWithOptions{
+        Apl: "[dataset_name] | limit 10",
+        EndTime: axiom.String("string"),
+        StartTime: axiom.String("string"),
+    }
+
+    var nocache *bool = axiom.Bool(false)
+
+    var saveAsKind *string = axiom.String("<value>")
+
+    var id *string = axiom.String("<value>")
 
     ctx := context.Background()
-    res, err := s.GetAnnotation(ctx, id)
+    res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
     if err != nil {
         log.Fatal(err)
     }
-    if res.Annotation != nil {
+    if res.AplResult != nil {
         // handle response
     }
 }
@@ -49,155 +59,21 @@ func main() {
 
 ### Parameters
 
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `id`                                                  | *string*                                              | :heavy_check_mark:                                    | The id of the annotation.                             |
+| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          | Example                                                                              |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `ctx`                                                                                | [context.Context](https://pkg.go.dev/context#Context)                                | :heavy_check_mark:                                                                   | The context to use for the request.                                                  |                                                                                      |
+| `format`                                                                             | [operations.Format](../../models/operations/format.md)                               | :heavy_check_mark:                                                                   | N/A                                                                                  |                                                                                      |
+| `aplRequestWithOptions`                                                              | [components.APLRequestWithOptions](../../models/components/aplrequestwithoptions.md) | :heavy_check_mark:                                                                   | N/A                                                                                  | {<br/>"apl": "[dataset_name] \| limit 10",<br/>"startTime": "string",<br/>"endTime": "string"<br/>} |
+| `nocache`                                                                            | **bool*                                                                              | :heavy_minus_sign:                                                                   | N/A                                                                                  |                                                                                      |
+| `saveAsKind`                                                                         | **string*                                                                            | :heavy_minus_sign:                                                                   | N/A                                                                                  |                                                                                      |
+| `id`                                                                                 | **string*                                                                            | :heavy_minus_sign:                                                                   | when saveAsKind is true, this parameter indicates the id of the associated dataset   |                                                                                      |
+| `opts`                                                                               | [][operations.Option](../../models/operations/option.md)                             | :heavy_minus_sign:                                                                   | The options for this request.                                                        |                                                                                      |
 
 
 ### Response
 
-**[*operations.GetAnnotationResponse](../../models/operations/getannotationresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
-
-## UpdateAnnotation
-
-Update an annotation.
-
-### Example Usage
-
-```go
-package main
-
-import(
-	"axiom-go/models/components"
-	axiomgo "axiom-go"
-	"axiom-go/types"
-	"context"
-	"log"
-)
-
-func main() {
-    s := axiomgo.New(
-        axiomgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
-    )
-
-
-    var id string = "<value>"
-
-    baseAnnotation := components.BaseAnnotation{
-        Title: axiomgo.String("Production deployment"),
-        Description: axiomgo.String("A production deployment happened."),
-        Time: types.MustNewTimeFromString("2024-04-19T15:00:00Z"),
-        EndTime: types.MustNewTimeFromString("2024-04-19T16:00:00Z"),
-        Type: axiomgo.String("deploy"),
-        URL: axiomgo.String("https://deployments.example.com/42"),
-        Datasets: []string{
-            "o",
-            "n",
-            "e",
-            "-",
-            "d",
-            "a",
-            "t",
-            "a",
-            "s",
-            "e",
-            "t",
-            ",",
-            "a",
-            "n",
-            "o",
-            "t",
-            "h",
-            "e",
-            "r",
-            "-",
-            "d",
-            "a",
-            "t",
-            "a",
-            "s",
-            "e",
-            "t",
-        },
-    }
-
-    ctx := context.Background()
-    res, err := s.UpdateAnnotation(ctx, id, baseAnnotation)
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res.Annotation != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            |
-| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `ctx`                                                                  | [context.Context](https://pkg.go.dev/context#Context)                  | :heavy_check_mark:                                                     | The context to use for the request.                                    |
-| `id`                                                                   | *string*                                                               | :heavy_check_mark:                                                     | The id of the annotation.                                              |
-| `baseAnnotation`                                                       | [components.BaseAnnotation](../../models/components/baseannotation.md) | :heavy_check_mark:                                                     | The fields to update.                                                  |
-
-
-### Response
-
-**[*operations.UpdateAnnotationResponse](../../models/operations/updateannotationresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
-
-## DeleteAnnotation
-
-Delete an annotation by id.
-
-### Example Usage
-
-```go
-package main
-
-import(
-	"axiom-go/models/components"
-	axiomgo "axiom-go"
-	"context"
-	"log"
-)
-
-func main() {
-    s := axiomgo.New(
-        axiomgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
-    )
-
-
-    var id string = "<value>"
-
-    ctx := context.Background()
-    res, err := s.DeleteAnnotation(ctx, id)
-    if err != nil {
-        log.Fatal(err)
-    }
-    if res != nil {
-        // handle response
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                             | Type                                                  | Required                                              | Description                                           |
-| ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
-| `ctx`                                                 | [context.Context](https://pkg.go.dev/context#Context) | :heavy_check_mark:                                    | The context to use for the request.                   |
-| `id`                                                  | *string*                                              | :heavy_check_mark:                                    | The id of the annotation.                             |
-
-
-### Response
-
-**[*operations.DeleteAnnotationResponse](../../models/operations/deleteannotationresponse.md), error**
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+**[*operations.QueryAplResponse](../../models/operations/queryaplresponse.md), error**
+| Error Object             | Status Code              | Content Type             |
+| ------------------------ | ------------------------ | ------------------------ |
+| sdkerrors.ForbiddenError | 401                      | application/json         |
+| sdkerrors.SDKError       | 4xx-5xx                  | */*                      |

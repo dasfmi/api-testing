@@ -20,7 +20,7 @@ It has been generated successfully based on your OpenAPI spec. However, it is no
 ## SDK Installation
 
 ```bash
-go get axiom-go
+go get axiom
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -33,25 +33,38 @@ go get axiom-go
 package main
 
 import (
-	axiomgo "axiom-go"
-	"axiom-go/models/components"
+	"axiom"
+	"axiom/models/components"
+	"axiom/models/operations"
 	"context"
 	"log"
 )
 
 func main() {
-	s := axiomgo.New(
-		axiomgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := axiom.New(
+		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var id string = "<value>"
+	var format operations.Format = operations.FormatTabular
+
+	aplRequestWithOptions := components.APLRequestWithOptions{
+		Apl:       "[dataset_name] | limit 10",
+		EndTime:   axiom.String("string"),
+		StartTime: axiom.String("string"),
+	}
+
+	var nocache *bool = axiom.Bool(false)
+
+	var saveAsKind *string = axiom.String("<value>")
+
+	var id *string = axiom.String("<value>")
 
 	ctx := context.Background()
-	res, err := s.GetAnnotation(ctx, id)
+	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Annotation != nil {
+	if res.AplResult != nil {
 		// handle response
 	}
 }
@@ -64,14 +77,23 @@ func main() {
 
 ### [Axiom SDK](docs/sdks/axiom/README.md)
 
-* [GetAnnotation](docs/sdks/axiom/README.md#getannotation) - Get a single annotation.
-* [UpdateAnnotation](docs/sdks/axiom/README.md#updateannotation) - Update an annotation.
-* [DeleteAnnotation](docs/sdks/axiom/README.md#deleteannotation) - Delete an annotation.
+* [Query](docs/sdks/axiom/README.md#query) - Query
 
-### [Annotations](docs/sdks/annotations/README.md)
+### [Datasets](docs/sdks/datasets/README.md)
 
-* [GetAnnotations](docs/sdks/annotations/README.md#getannotations) - Get annotations
-* [CreateAnnotation](docs/sdks/annotations/README.md#createannotation) - Create a new annotation.
+* [GetDatasets](docs/sdks/datasets/README.md#getdatasets) - List Datasets
+* [CreateDataset](docs/sdks/datasets/README.md#createdataset) - Create a dataset
+* [GetDataset](docs/sdks/datasets/README.md#getdataset) - Retrieve dataset by ID
+* [UpdateDataset](docs/sdks/datasets/README.md#updatedataset) - Update dataset
+* [DeleteDataset](docs/sdks/datasets/README.md#deletedataset) - Delete dataset
+* [IngestIntoDatasetJSON](docs/sdks/datasets/README.md#ingestintodatasetjson) - Ingest
+* [IngestIntoDatasetRaw](docs/sdks/datasets/README.md#ingestintodatasetraw) - Ingest
+* [QueryDataset](docs/sdks/datasets/README.md#querydataset) - Query (Legacy)
+* [TrimDataset](docs/sdks/datasets/README.md#trimdataset) - Trim dataset
+
+### [Users](docs/sdks/users/README.md)
+
+* [GetCurrentUser](docs/sdks/users/README.md#getcurrentuser) - Get current user
 <!-- End Available Resources and Operations [operations] -->
 
 <!-- Start Error Handling [errors] -->
@@ -79,9 +101,10 @@ func main() {
 
 Handling errors in this SDK should largely match your expectations.  All operations return a response object or an error, they will never return both.  When specified by the OpenAPI spec document, the SDK will return the appropriate subclass.
 
-| Error Object       | Status Code        | Content Type       |
-| ------------------ | ------------------ | ------------------ |
-| sdkerrors.SDKError | 4xx-5xx            | */*                |
+| Error Object             | Status Code              | Content Type             |
+| ------------------------ | ------------------------ | ------------------------ |
+| sdkerrors.ForbiddenError | 401                      | application/json         |
+| sdkerrors.SDKError       | 4xx-5xx                  | */*                      |
 
 ### Example
 
@@ -89,24 +112,43 @@ Handling errors in this SDK should largely match your expectations.  All operati
 package main
 
 import (
-	axiomgo "axiom-go"
-	"axiom-go/models/components"
-	"axiom-go/models/sdkerrors"
+	"axiom"
+	"axiom/models/components"
+	"axiom/models/operations"
+	"axiom/models/sdkerrors"
 	"context"
 	"errors"
 	"log"
 )
 
 func main() {
-	s := axiomgo.New(
-		axiomgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := axiom.New(
+		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var id string = "<value>"
+	var format operations.Format = operations.FormatTabular
+
+	aplRequestWithOptions := components.APLRequestWithOptions{
+		Apl:       "[dataset_name] | limit 10",
+		EndTime:   axiom.String("string"),
+		StartTime: axiom.String("string"),
+	}
+
+	var nocache *bool = axiom.Bool(false)
+
+	var saveAsKind *string = axiom.String("<value>")
+
+	var id *string = axiom.String("<value>")
 
 	ctx := context.Background()
-	res, err := s.GetAnnotation(ctx, id)
+	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
 	if err != nil {
+
+		var e *sdkerrors.ForbiddenError
+		if errors.As(err, &e) {
+			// handle error
+			log.Fatal(e.Error())
+		}
 
 		var e *sdkerrors.SDKError
 		if errors.As(err, &e) {
@@ -128,7 +170,7 @@ You can override the default server globally using the `WithServerIndex` option 
 
 | # | Server | Variables |
 | - | ------ | --------- |
-| 0 | `https://api.axiom.co` | None |
+| 0 | `https://api.axiom.co/v1/` | None |
 
 #### Example
 
@@ -136,26 +178,39 @@ You can override the default server globally using the `WithServerIndex` option 
 package main
 
 import (
-	axiomgo "axiom-go"
-	"axiom-go/models/components"
+	"axiom"
+	"axiom/models/components"
+	"axiom/models/operations"
 	"context"
 	"log"
 )
 
 func main() {
-	s := axiomgo.New(
-		axiomgo.WithServerIndex(0),
-		axiomgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := axiom.New(
+		axiom.WithServerIndex(0),
+		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var id string = "<value>"
+	var format operations.Format = operations.FormatTabular
+
+	aplRequestWithOptions := components.APLRequestWithOptions{
+		Apl:       "[dataset_name] | limit 10",
+		EndTime:   axiom.String("string"),
+		StartTime: axiom.String("string"),
+	}
+
+	var nocache *bool = axiom.Bool(false)
+
+	var saveAsKind *string = axiom.String("<value>")
+
+	var id *string = axiom.String("<value>")
 
 	ctx := context.Background()
-	res, err := s.GetAnnotation(ctx, id)
+	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Annotation != nil {
+	if res.AplResult != nil {
 		// handle response
 	}
 }
@@ -170,26 +225,39 @@ The default server can also be overridden globally using the `WithServerURL` opt
 package main
 
 import (
-	axiomgo "axiom-go"
-	"axiom-go/models/components"
+	"axiom"
+	"axiom/models/components"
+	"axiom/models/operations"
 	"context"
 	"log"
 )
 
 func main() {
-	s := axiomgo.New(
-		axiomgo.WithServerURL("https://api.axiom.co"),
-		axiomgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := axiom.New(
+		axiom.WithServerURL("https://api.axiom.co/v1/"),
+		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var id string = "<value>"
+	var format operations.Format = operations.FormatTabular
+
+	aplRequestWithOptions := components.APLRequestWithOptions{
+		Apl:       "[dataset_name] | limit 10",
+		EndTime:   axiom.String("string"),
+		StartTime: axiom.String("string"),
+	}
+
+	var nocache *bool = axiom.Bool(false)
+
+	var saveAsKind *string = axiom.String("<value>")
+
+	var id *string = axiom.String("<value>")
 
 	ctx := context.Background()
-	res, err := s.GetAnnotation(ctx, id)
+	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Annotation != nil {
+	if res.AplResult != nil {
 		// handle response
 	}
 }
@@ -235,31 +303,45 @@ This SDK supports the following security scheme globally:
 
 | Name         | Type         | Scheme       |
 | ------------ | ------------ | ------------ |
-| `BearerAuth` | http         | HTTP Bearer  |
+| `Auth`       | oauth2       | OAuth2 token |
 
 You can configure it using the `WithSecurity` option when initializing the SDK client instance. For example:
 ```go
 package main
 
 import (
-	axiomgo "axiom-go"
+	"axiom"
+	"axiom/models/components"
+	"axiom/models/operations"
 	"context"
 	"log"
 )
 
 func main() {
-	s := axiomgo.New(
-		axiomgo.WithSecurity("<YOUR_BEARER_TOKEN_HERE>"),
+	s := axiom.New(
+		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var id string = "<value>"
+	var format operations.Format = operations.FormatTabular
+
+	aplRequestWithOptions := components.APLRequestWithOptions{
+		Apl:       "[dataset_name] | limit 10",
+		EndTime:   axiom.String("string"),
+		StartTime: axiom.String("string"),
+	}
+
+	var nocache *bool = axiom.Bool(false)
+
+	var saveAsKind *string = axiom.String("<value>")
+
+	var id *string = axiom.String("<value>")
 
 	ctx := context.Background()
-	res, err := s.GetAnnotation(ctx, id)
+	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if res.Annotation != nil {
+	if res.AplResult != nil {
 		// handle response
 	}
 }
@@ -272,6 +354,122 @@ func main() {
 
 
 <!-- End Special Types [types] -->
+
+<!-- Start Retries [retries] -->
+## Retries
+
+Some of the endpoints in this SDK support retries. If you use the SDK without any configuration, it will fall back to the default retry strategy provided by the API. However, the default retry strategy can be overridden on a per-operation basis, or across the entire SDK.
+
+To change the default retry strategy for a single API call, simply provide a `RetryConfig` object to the call by using the `WithRetries` option:
+```go
+package main
+
+import (
+	"axiom"
+	"axiom/internal/utils"
+	"axiom/models/components"
+	"axiom/models/operations"
+	"context"
+	"log"
+	"models/operations"
+)
+
+func main() {
+	s := axiom.New(
+		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
+	)
+
+	var format operations.Format = operations.FormatTabular
+
+	aplRequestWithOptions := components.APLRequestWithOptions{
+		Apl:       "[dataset_name] | limit 10",
+		EndTime:   axiom.String("string"),
+		StartTime: axiom.String("string"),
+	}
+
+	var nocache *bool = axiom.Bool(false)
+
+	var saveAsKind *string = axiom.String("<value>")
+
+	var id *string = axiom.String("<value>")
+
+	ctx := context.Background()
+	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id, operations.WithRetries(
+		utils.RetryConfig{
+			Strategy: "backoff",
+			Backoff: &utils.BackoffStrategy{
+				InitialInterval: 1,
+				MaxInterval:     50,
+				Exponent:        1.1,
+				MaxElapsedTime:  100,
+			},
+			RetryConnectionErrors: false,
+		}))
+	if err != nil {
+		log.Fatal(err)
+	}
+	if res.AplResult != nil {
+		// handle response
+	}
+}
+
+```
+
+If you'd like to override the default retry strategy for all operations that support retries, you can use the `WithRetryConfig` option at SDK initialization:
+```go
+package main
+
+import (
+	"axiom"
+	"axiom/internal/utils"
+	"axiom/models/components"
+	"axiom/models/operations"
+	"context"
+	"log"
+)
+
+func main() {
+	s := axiom.New(
+		axiom.WithRetryConfig(
+			utils.RetryConfig{
+				Strategy: "backoff",
+				Backoff: &utils.BackoffStrategy{
+					InitialInterval: 1,
+					MaxInterval:     50,
+					Exponent:        1.1,
+					MaxElapsedTime:  100,
+				},
+				RetryConnectionErrors: false,
+			}),
+		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
+	)
+
+	var format operations.Format = operations.FormatTabular
+
+	aplRequestWithOptions := components.APLRequestWithOptions{
+		Apl:       "[dataset_name] | limit 10",
+		EndTime:   axiom.String("string"),
+		StartTime: axiom.String("string"),
+	}
+
+	var nocache *bool = axiom.Bool(false)
+
+	var saveAsKind *string = axiom.String("<value>")
+
+	var id *string = axiom.String("<value>")
+
+	ctx := context.Background()
+	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if res.AplResult != nil {
+		// handle response
+	}
+}
+
+```
+<!-- End Retries [retries] -->
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
