@@ -12,8 +12,6 @@ type RequestBody struct {
 type IngestIntoDatasetJSONRequest struct {
 	// Unique ID of the dataset where you want to send data.
 	ID string `pathParam:"style=simple,explode=false,name=id"`
-	// Data you want to send to Axiom in a supported format.
-	RequestBody []RequestBody `request:"mediaType=application/json"`
 	// The name of the field to use as the timestamp. If not specified, the timestamp will be the time the event was received by Axiom.
 	TimestampField *string `queryParam:"style=form,explode=true,name=timestamp-field"`
 	// The date-time format of the timestamp field. The reference time is `Mon Jan 2 15:04:05 -0700 MST 2006`, as specified in https://pkg.go.dev/time/?tab=doc#Parse
@@ -24,6 +22,8 @@ type IngestIntoDatasetJSONRequest struct {
 	XAxiomCSVFields []string `header:"style=simple,explode=false,name=X-Axiom-CSV-Fields"`
 	// An optional JSON encoded object with additional labels to add to all events in the request
 	XAxiomEventLabels *string `header:"style=simple,explode=false,name=X-Axiom-Event-Labels"`
+	// Data you want to send to Axiom in a supported format.
+	RequestBody []RequestBody `request:"mediaType=application/json"`
 }
 
 func (o *IngestIntoDatasetJSONRequest) GetID() string {
@@ -31,13 +31,6 @@ func (o *IngestIntoDatasetJSONRequest) GetID() string {
 		return ""
 	}
 	return o.ID
-}
-
-func (o *IngestIntoDatasetJSONRequest) GetRequestBody() []RequestBody {
-	if o == nil {
-		return []RequestBody{}
-	}
-	return o.RequestBody
 }
 
 func (o *IngestIntoDatasetJSONRequest) GetTimestampField() *string {
@@ -73,6 +66,13 @@ func (o *IngestIntoDatasetJSONRequest) GetXAxiomEventLabels() *string {
 		return nil
 	}
 	return o.XAxiomEventLabels
+}
+
+func (o *IngestIntoDatasetJSONRequest) GetRequestBody() []RequestBody {
+	if o == nil {
+		return []RequestBody{}
+	}
+	return o.RequestBody
 }
 
 type IngestIntoDatasetJSONResponse struct {

@@ -15,22 +15,15 @@ func main() {
 		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var format operations.Format = operations.FormatTabular
-
-	aplRequestWithOptions := components.APLRequestWithOptions{
-		Apl:       "[dataset_name] | limit 10",
-		EndTime:   axiom.String("string"),
-		StartTime: axiom.String("string"),
-	}
-
-	var nocache *bool = axiom.Bool(false)
-
-	var saveAsKind *string = axiom.String("<value>")
-
-	var id *string = axiom.String("<value>")
-
 	ctx := context.Background()
-	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
+	res, err := s.Query(ctx, operations.QueryAplRequest{
+		Format: operations.FormatTabular,
+		APLRequestWithOptions: components.APLRequestWithOptions{
+			Apl:       "[dataset_name] | limit 10",
+			EndTime:   axiom.String("string"),
+			StartTime: axiom.String("string"),
+		},
+	})
 	if err != nil {
 		log.Fatal(err)
 	}

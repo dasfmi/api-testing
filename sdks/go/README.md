@@ -45,22 +45,15 @@ func main() {
 		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var format operations.Format = operations.FormatTabular
-
-	aplRequestWithOptions := components.APLRequestWithOptions{
-		Apl:       "[dataset_name] | limit 10",
-		EndTime:   axiom.String("string"),
-		StartTime: axiom.String("string"),
-	}
-
-	var nocache *bool = axiom.Bool(false)
-
-	var saveAsKind *string = axiom.String("<value>")
-
-	var id *string = axiom.String("<value>")
-
 	ctx := context.Background()
-	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
+	res, err := s.Query(ctx, operations.QueryAplRequest{
+		Format: operations.FormatTabular,
+		APLRequestWithOptions: components.APLRequestWithOptions{
+			Apl:       "[dataset_name] | limit 10",
+			EndTime:   axiom.String("string"),
+			StartTime: axiom.String("string"),
+		},
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -78,18 +71,18 @@ func main() {
 ### [Axiom SDK](docs/sdks/axiom/README.md)
 
 * [Query](docs/sdks/axiom/README.md#query) - Query
+* [IngestJSON](docs/sdks/axiom/README.md#ingestjson) - Ingest
+* [IngestRaw](docs/sdks/axiom/README.md#ingestraw) - Ingest
+* [QueryLegacyDollar](docs/sdks/axiom/README.md#querylegacydollar) - Query (Legacy)
 
 ### [Datasets](docs/sdks/datasets/README.md)
 
-* [GetDatasets](docs/sdks/datasets/README.md#getdatasets) - List Datasets
-* [CreateDataset](docs/sdks/datasets/README.md#createdataset) - Create a dataset
-* [GetDataset](docs/sdks/datasets/README.md#getdataset) - Retrieve dataset by ID
-* [UpdateDataset](docs/sdks/datasets/README.md#updatedataset) - Update dataset
-* [DeleteDataset](docs/sdks/datasets/README.md#deletedataset) - Delete dataset
-* [IngestIntoDatasetJSON](docs/sdks/datasets/README.md#ingestintodatasetjson) - Ingest
-* [IngestIntoDatasetRaw](docs/sdks/datasets/README.md#ingestintodatasetraw) - Ingest
-* [QueryDataset](docs/sdks/datasets/README.md#querydataset) - Query (Legacy)
-* [TrimDataset](docs/sdks/datasets/README.md#trimdataset) - Trim dataset
+* [List](docs/sdks/datasets/README.md#list) - List Datasets
+* [Create](docs/sdks/datasets/README.md#create) - Create a dataset
+* [Get](docs/sdks/datasets/README.md#get) - Retrieve dataset by ID
+* [Update](docs/sdks/datasets/README.md#update) - Update dataset
+* [Delete](docs/sdks/datasets/README.md#delete) - Delete dataset
+* [Trim](docs/sdks/datasets/README.md#trim) - Trim dataset
 
 ### [Users](docs/sdks/users/README.md)
 
@@ -126,22 +119,15 @@ func main() {
 		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var format operations.Format = operations.FormatTabular
-
-	aplRequestWithOptions := components.APLRequestWithOptions{
-		Apl:       "[dataset_name] | limit 10",
-		EndTime:   axiom.String("string"),
-		StartTime: axiom.String("string"),
-	}
-
-	var nocache *bool = axiom.Bool(false)
-
-	var saveAsKind *string = axiom.String("<value>")
-
-	var id *string = axiom.String("<value>")
-
 	ctx := context.Background()
-	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
+	res, err := s.Query(ctx, operations.QueryAplRequest{
+		Format: operations.FormatTabular,
+		APLRequestWithOptions: components.APLRequestWithOptions{
+			Apl:       "[dataset_name] | limit 10",
+			EndTime:   axiom.String("string"),
+			StartTime: axiom.String("string"),
+		},
+	})
 	if err != nil {
 
 		var e *sdkerrors.ForbiddenError
@@ -191,22 +177,15 @@ func main() {
 		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var format operations.Format = operations.FormatTabular
-
-	aplRequestWithOptions := components.APLRequestWithOptions{
-		Apl:       "[dataset_name] | limit 10",
-		EndTime:   axiom.String("string"),
-		StartTime: axiom.String("string"),
-	}
-
-	var nocache *bool = axiom.Bool(false)
-
-	var saveAsKind *string = axiom.String("<value>")
-
-	var id *string = axiom.String("<value>")
-
 	ctx := context.Background()
-	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
+	res, err := s.Query(ctx, operations.QueryAplRequest{
+		Format: operations.FormatTabular,
+		APLRequestWithOptions: components.APLRequestWithOptions{
+			Apl:       "[dataset_name] | limit 10",
+			EndTime:   axiom.String("string"),
+			StartTime: axiom.String("string"),
+		},
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -238,22 +217,15 @@ func main() {
 		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var format operations.Format = operations.FormatTabular
-
-	aplRequestWithOptions := components.APLRequestWithOptions{
-		Apl:       "[dataset_name] | limit 10",
-		EndTime:   axiom.String("string"),
-		StartTime: axiom.String("string"),
-	}
-
-	var nocache *bool = axiom.Bool(false)
-
-	var saveAsKind *string = axiom.String("<value>")
-
-	var id *string = axiom.String("<value>")
-
 	ctx := context.Background()
-	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
+	res, err := s.Query(ctx, operations.QueryAplRequest{
+		Format: operations.FormatTabular,
+		APLRequestWithOptions: components.APLRequestWithOptions{
+			Apl:       "[dataset_name] | limit 10",
+			EndTime:   axiom.String("string"),
+			StartTime: axiom.String("string"),
+		},
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -322,22 +294,15 @@ func main() {
 		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var format operations.Format = operations.FormatTabular
-
-	aplRequestWithOptions := components.APLRequestWithOptions{
-		Apl:       "[dataset_name] | limit 10",
-		EndTime:   axiom.String("string"),
-		StartTime: axiom.String("string"),
-	}
-
-	var nocache *bool = axiom.Bool(false)
-
-	var saveAsKind *string = axiom.String("<value>")
-
-	var id *string = axiom.String("<value>")
-
 	ctx := context.Background()
-	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
+	res, err := s.Query(ctx, operations.QueryAplRequest{
+		Format: operations.FormatTabular,
+		APLRequestWithOptions: components.APLRequestWithOptions{
+			Apl:       "[dataset_name] | limit 10",
+			EndTime:   axiom.String("string"),
+			StartTime: axiom.String("string"),
+		},
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -379,22 +344,15 @@ func main() {
 		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var format operations.Format = operations.FormatTabular
-
-	aplRequestWithOptions := components.APLRequestWithOptions{
-		Apl:       "[dataset_name] | limit 10",
-		EndTime:   axiom.String("string"),
-		StartTime: axiom.String("string"),
-	}
-
-	var nocache *bool = axiom.Bool(false)
-
-	var saveAsKind *string = axiom.String("<value>")
-
-	var id *string = axiom.String("<value>")
-
 	ctx := context.Background()
-	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id, operations.WithRetries(
+	res, err := s.Query(ctx, operations.QueryAplRequest{
+		Format: operations.FormatTabular,
+		APLRequestWithOptions: components.APLRequestWithOptions{
+			Apl:       "[dataset_name] | limit 10",
+			EndTime:   axiom.String("string"),
+			StartTime: axiom.String("string"),
+		},
+	}, operations.WithRetries(
 		utils.RetryConfig{
 			Strategy: "backoff",
 			Backoff: &utils.BackoffStrategy{
@@ -444,22 +402,15 @@ func main() {
 		axiom.WithSecurity("<YOUR_AUTH_HERE>"),
 	)
 
-	var format operations.Format = operations.FormatTabular
-
-	aplRequestWithOptions := components.APLRequestWithOptions{
-		Apl:       "[dataset_name] | limit 10",
-		EndTime:   axiom.String("string"),
-		StartTime: axiom.String("string"),
-	}
-
-	var nocache *bool = axiom.Bool(false)
-
-	var saveAsKind *string = axiom.String("<value>")
-
-	var id *string = axiom.String("<value>")
-
 	ctx := context.Background()
-	res, err := s.Query(ctx, format, aplRequestWithOptions, nocache, saveAsKind, id)
+	res, err := s.Query(ctx, operations.QueryAplRequest{
+		Format: operations.FormatTabular,
+		APLRequestWithOptions: components.APLRequestWithOptions{
+			Apl:       "[dataset_name] | limit 10",
+			EndTime:   axiom.String("string"),
+			StartTime: axiom.String("string"),
+		},
+	})
 	if err != nil {
 		log.Fatal(err)
 	}

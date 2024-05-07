@@ -26,8 +26,24 @@ x-speakeasy-retries:
     - 5XX
   retryConnectionErrors: true
 x-speakeasy-name-override:
+  - operationId: ^queryDataset$
+    methodNameOverride: QueryLegacy$
   - operationId: ^queryApl$
     methodNameOverride: Query
+  - operationId: ^ingest
+    methodNameOverride: Ingest
+  - operationId: ^createDataset
+    methodNameOverride: Create
+  - operationId: ^deleteDataset$
+    methodNameOverride: Delete
+  - operationId: ^updateDataset$
+    methodNameOverride: Update
+  - operationId: ^getDataset$
+    methodNameOverride: Get
+  - operationId: ^getDatasets$
+    methodNameOverride: List
+  - operationId: ^trimDataset$
+    methodNameOverride: Trim
 
 paths:
   /datasets:
@@ -109,6 +125,7 @@ paths:
           - tabular
       - name: nocache
         in: query
+        x-speakeasy-ignore: true
         schema:
           type: boolean
           default: false
@@ -249,6 +266,7 @@ paths:
         - ManageDatasets
   /datasets/{id}/ingest:
     post:
+      x-speakeasy-group: ""
       tags:
       - Datasets
       description: Ingest
@@ -353,6 +371,7 @@ paths:
     post:
       tags:
       - Datasets
+      x-speakeasy-group: ""
       description: Query (Legacy)
       operationId: queryDataset
       parameters:

@@ -1,22 +1,23 @@
 lockVersion: 2.0.0
 id: 8d14d0a4-d055-4e7b-9517-beadd9133686
 management:
-  docChecksum: 138bf7dde08e52abee88df6ec0d5d142
+  docChecksum: b1d1285646e13f8a9defed390104d1af
   docVersion: 1.0.1
-  speakeasyVersion: 1.274.1
-  generationVersion: 2.314.0
-  releaseVersion: 0.4.1
-  configChecksum: c2b8e57dd7a308893b4addf04745e5c1
+  speakeasyVersion: 1.281.0
+  generationVersion: 2.324.0
+  releaseVersion: 0.5.11
+  configChecksum: f217be507699a2d7cedb78c9cb6980cd
 features:
   go:
     constsAndDefaults: 0.1.4
-    core: 3.4.6
+    core: 3.4.7
     flattening: 2.81.1
     globalSecurity: 2.82.9
     globalServerURLs: 2.82.2
     groups: 2.81.2
+    ignores: 2.81.1
     nameOverrides: 2.81.2
-    responseFormat: 0.1.0
+    responseFormat: 0.1.1
     retries: 2.82.2
 generatedFiles:
   - datasets.go
@@ -40,14 +41,14 @@ generatedFiles:
   - internal/utils/security.go
   - internal/utils/utils.go
   - /models/operations/queryapl.go
+  - /models/operations/ingestintodatasetjson.go
+  - /models/operations/ingestintodatasetraw.go
+  - /models/operations/querydataset.go
   - /models/operations/getdatasets.go
   - /models/operations/createdataset.go
   - /models/operations/getdataset.go
   - /models/operations/updatedataset.go
   - /models/operations/deletedataset.go
-  - /models/operations/ingestintodatasetjson.go
-  - /models/operations/ingestintodatasetraw.go
-  - /models/operations/querydataset.go
   - /models/operations/trimdataset.go
   - /models/operations/getcurrentuser.go
   - /models/components/aplresult.go
@@ -75,13 +76,13 @@ generatedFiles:
   - /models/components/httpmetadata.go
   - /models/components/aplrequestwithoptions.go
   - /models/components/queryoptions.go
-  - /models/components/datasetspec.go
-  - /models/components/createdataset.go
-  - /models/components/updatedataset.go
   - /models/components/ingeststatus.go
   - /models/components/ingestfailure.go
   - /models/components/result.go
   - /models/components/queryrequestwithoptions.go
+  - /models/components/datasetspec.go
+  - /models/components/createdataset.go
+  - /models/components/updatedataset.go
   - /models/components/trimresult.go
   - /models/components/trimoptions.go
   - /models/components/user.go
@@ -91,14 +92,6 @@ generatedFiles:
   - docs/models/operations/format.md
   - docs/models/operations/queryaplrequest.md
   - docs/models/operations/queryaplresponse.md
-  - docs/models/operations/getdatasetsresponse.md
-  - docs/models/operations/createdatasetresponse.md
-  - docs/models/operations/getdatasetrequest.md
-  - docs/models/operations/getdatasetresponse.md
-  - docs/models/operations/updatedatasetrequest.md
-  - docs/models/operations/updatedatasetresponse.md
-  - docs/models/operations/deletedatasetrequest.md
-  - docs/models/operations/deletedatasetresponse.md
   - docs/models/operations/requestbody.md
   - docs/models/operations/ingestintodatasetjsonrequest.md
   - docs/models/operations/ingestintodatasetjsonresponse.md
@@ -107,6 +100,14 @@ generatedFiles:
   - docs/models/operations/ingestintodatasetrawresponse.md
   - docs/models/operations/querydatasetrequest.md
   - docs/models/operations/querydatasetresponse.md
+  - docs/models/operations/getdatasetsresponse.md
+  - docs/models/operations/createdatasetresponse.md
+  - docs/models/operations/getdatasetrequest.md
+  - docs/models/operations/getdatasetresponse.md
+  - docs/models/operations/updatedatasetrequest.md
+  - docs/models/operations/updatedatasetresponse.md
+  - docs/models/operations/deletedatasetrequest.md
+  - docs/models/operations/deletedatasetresponse.md
   - docs/models/operations/trimdatasetrequest.md
   - docs/models/operations/trimdatasetresponse.md
   - docs/models/operations/getcurrentuserresponse.md
@@ -147,13 +148,13 @@ generatedFiles:
   - docs/models/components/variables.md
   - docs/models/components/aplrequestwithoptions.md
   - docs/models/components/queryoptions.md
-  - docs/models/components/datasetspec.md
-  - docs/models/components/createdataset.md
-  - docs/models/components/updatedataset.md
   - docs/models/components/ingeststatus.md
   - docs/models/components/ingestfailure.md
   - docs/models/components/result.md
   - docs/models/components/queryrequestwithoptions.md
+  - docs/models/components/datasetspec.md
+  - docs/models/components/createdataset.md
+  - docs/models/components/updatedataset.md
   - docs/models/components/trimresult.md
   - docs/models/components/trimoptions.md
   - docs/models/components/user.md

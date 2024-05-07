@@ -12,7 +12,7 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: false
 go:
-  version: 0.4.1
+  version: 0.5.11
   additionalDependencies: {}
   clientServerStatusCodesAsErrors: true
   flattenGlobalSecurity: true
@@ -25,7 +25,7 @@ go:
       shared: models/components
       webhooks: models/webhooks
   inputModelSuffix: input
-  maxMethodParams: 444
+  maxMethodParams: 2
   outputModelSuffix: output
   packageName: axiom
   responseFormat: envelope-http

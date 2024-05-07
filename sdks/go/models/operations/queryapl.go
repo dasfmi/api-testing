@@ -3,7 +3,6 @@
 package operations
 
 import (
-	"axiom/internal/utils"
 	"axiom/models/components"
 	"encoding/json"
 	"fmt"
@@ -37,23 +36,11 @@ func (e *Format) UnmarshalJSON(data []byte) error {
 }
 
 type QueryAplRequest struct {
-	Format                Format                           `queryParam:"style=form,explode=true,name=format"`
-	APLRequestWithOptions components.APLRequestWithOptions `request:"mediaType=application/json"`
-	Nocache               *bool                            `default:"false" queryParam:"style=form,explode=true,name=nocache"`
-	SaveAsKind            *string                          `queryParam:"style=form,explode=true,name=saveAsKind"`
+	Format     Format  `queryParam:"style=form,explode=true,name=format"`
+	SaveAsKind *string `queryParam:"style=form,explode=true,name=saveAsKind"`
 	// when saveAsKind is true, this parameter indicates the id of the associated dataset
-	ID *string `queryParam:"style=form,explode=true,name=id"`
-}
-
-func (q QueryAplRequest) MarshalJSON() ([]byte, error) {
-	return utils.MarshalJSON(q, "", false)
-}
-
-func (q *QueryAplRequest) UnmarshalJSON(data []byte) error {
-	if err := utils.UnmarshalJSON(data, &q, "", false, false); err != nil {
-		return err
-	}
-	return nil
+	ID                    *string                          `queryParam:"style=form,explode=true,name=id"`
+	APLRequestWithOptions components.APLRequestWithOptions `request:"mediaType=application/json"`
 }
 
 func (o *QueryAplRequest) GetFormat() Format {
@@ -61,20 +48,6 @@ func (o *QueryAplRequest) GetFormat() Format {
 		return Format("")
 	}
 	return o.Format
-}
-
-func (o *QueryAplRequest) GetAPLRequestWithOptions() components.APLRequestWithOptions {
-	if o == nil {
-		return components.APLRequestWithOptions{}
-	}
-	return o.APLRequestWithOptions
-}
-
-func (o *QueryAplRequest) GetNocache() *bool {
-	if o == nil {
-		return nil
-	}
-	return o.Nocache
 }
 
 func (o *QueryAplRequest) GetSaveAsKind() *string {
@@ -89,6 +62,13 @@ func (o *QueryAplRequest) GetID() *string {
 		return nil
 	}
 	return o.ID
+}
+
+func (o *QueryAplRequest) GetAPLRequestWithOptions() components.APLRequestWithOptions {
+	if o == nil {
+		return components.APLRequestWithOptions{}
+	}
+	return o.APLRequestWithOptions
 }
 
 type QueryAplResponse struct {
